@@ -1,7 +1,9 @@
 #!/usr/bin/php
 <?php
 
+//$stuinfo = array('1' => array('name' => 'shijia', 'sex' => 'man', 'en' => 90, 'cn' => 99));
 
+//$stuinfo = addStu();
 function showMainMenu()
 {
     echo "===学生成绩管理系统===",PHP_EOL;
@@ -15,10 +17,10 @@ function showMainMenu()
     echo "===8.退出===",PHP_EOL;
 }
 
-function selectMenu()
+function selectMenu($show)
 {
     while(TRUE){
-    showMainMenu();
+    $show();
     echo "请输入[1-8]";
     fscanf(STDIN,"%d",$m);
 
@@ -54,25 +56,27 @@ function selectMenu()
     }
 }
 
-function addStu($stuinfo)
+function addStu()
 {
     $id = 0;
     while(TRUE){
 
         printf("请输入学生信息");
 
-        fscanf(STDIN,"%s%s%d%d",$name,$sex,$en,$cn);
+        fscanf(STDIN,"%s%s",$name,$sex);
+
+        $en = rand(60,99);
+        $cn = rand(60,99);
 
         if($name == 'q'){
-
+            echo "这个啥子情况嘛\n";
             return $stuinfo;
-            break;
         }
 
-        $stuinfo[$id] = array('name' => $name, 'sex' => $sex, 
+        $stuinfo[$id] = array('name' => $name, 'sex' => $sex,
                                 'en' => $en, 'cn' => $cn);
 
-        var_dump($stuinfo);
+        //var_dump($stuinfo);
 
         $id++;
 
@@ -80,11 +84,11 @@ function addStu($stuinfo)
     }
 }
 
+$stuinfo = addStu();
 function through()
 {
-
-    $stuinfo = addStu();
-    foreach($stuinfo as $key => $var){
+    //print_r($stuinfo);
+    foreach((array)$stuinfo as $key => $var){
 
         echo $key," ",$var['name'],"  ",$var['sex'],"  ",$var['en'],"\n";
 
@@ -93,8 +97,8 @@ function through()
 
 function main()
 {
-    //showMainMenu();
-    selectMenu();
+    print_r(addStu());
+    selectMenu("showMainMenu");
 }
 
 exit(main());
